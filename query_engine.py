@@ -28,11 +28,8 @@ class QueryEngine:
             List[dict]: list of products info, each dictionary are responding to one product and contains next fields: name, image, price and discount
         """
         
-        query_classes = [f"'{_}'" for _ in classes]
-        select_query = F'''SELECT smart_scales_data.Products.name,
-        smart_scales_data.Products.image,
-        smart_scales_data.Products.price,
-        smart_scales_data.Products.discount
+        query_classes = [f"'{_class}'" for _class in classes]
+        select_query = F'''SELECT Products.name, image, price, discount
         FROM (SELECT *
             FROM smart_scales_data.Classes
             WHERE class IN ({" ,".join(query_classes)})) AS names

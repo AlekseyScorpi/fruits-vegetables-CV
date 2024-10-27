@@ -14,6 +14,7 @@ import time
 from product_card import add_product_to_list, round_floor
 from query_engine import QueryEngine
 
+
 class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def __init__(self) -> None:
         """Init function for App
@@ -27,12 +28,14 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.camera_scene = QGraphicsScene()
         self.camera_view.setScene(self.camera_scene)
         self.camera_timer = QTimer(self)
-        self.camera_timer.timeout.connect(self.display_image)
+        
+        display_function = self.display_image_stream if os.getenv('DEBUG', default="FALSE") == "TRUE" else self.display_image
+        
+        self.camera_timer.timeout.connect(display_function)
         self.camera_timer.start(30)
         
         self.product_weight = 0.0
         self.model = YOLO('./weights_small/best.pt') if os.getenv('MODEL', default='SMALL') == 'SMALL' else YOLO('./weights_nano/best.pt')
-        
         self.predict_button.clicked.connect(lambda: self.predict_image())
         self.receipt_button.clicked.connect(self.print_receipt)
         
@@ -57,7 +60,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         """
         return round_floor(random.uniform(start, end), 3)
     
-    def print_receipt(self):
+    def print_receipt(self) -> None:
         selected_item = self.products_list.currentItem()
         if selected_item is None:
             QMessageBox.warning(self, "Ошибка", "Не выбран ни один товар.")
@@ -185,5 +188,5 @@ def main() -> None:
     app.exec_()
 
 if __name__ == "__main__":
-    load_dotenv()
+    load_dotenv(override=True)
     main()
