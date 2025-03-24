@@ -114,10 +114,19 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
             return
-        products = self.query_engine.get_products_info(detected_classes)
         
-        for product in products:
-            add_product_to_list(self.products_list, product)
+        try:
+            products = self.query_engine.get_products_info(detected_classes)
+            
+            for product in products:
+                add_product_to_list(self.products_list, product)
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowTitle("Ошибка")
+            msg.setText(f"Сейчас невозможно получить информацию о продуктах")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
                 
         # set random weights for trial version
         weight = self.__get_random_weight()
