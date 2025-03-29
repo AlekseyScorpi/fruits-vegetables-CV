@@ -58,7 +58,7 @@ python main.py
 📖 More details about our models and the problem-solving approach can be found in our article:  
 📝 **[elibrary.ru/item.asp?id=80257050](https://elibrary.ru/item.asp?id=80257050)** (in Russian)
 
-📂 **Training logs and model weights (YOLOv8 and YOLOv11)**:  
+📂 **Training logs and model weights 1-YOLOv8 (small), 2-YOLOv8 (nano), 3-YOLOv11 (nano), 4-YOLOv11 (small)**:  
 📎 **[Google Drive](https://drive.google.com/file/d/1d2SuxCLBYriJ4DaPlrhQIz8JvasaTVLF/view?usp=drive_link)**
 
 ---
